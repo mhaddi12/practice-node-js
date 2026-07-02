@@ -9,9 +9,7 @@ const options = {
       version: '1.0.0',
       description: 'Register, login, JWT + refresh tokens, email verification, password reset, and role-based access.'
     },
-    // Relative server URL: "Try it out" then targets whatever host served the
-    // docs page (LAN IP, tunnel URL, etc.) instead of a hardcoded origin.
-    servers: [{ url: env.CLIENT_URL }],
+    servers: [{ url: env.clientUrl }],
     components: {
       securitySchemes: {
         bearerAuth: {

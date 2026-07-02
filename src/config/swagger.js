@@ -1,4 +1,5 @@
 const swaggerJsdoc = require('swagger-jsdoc');
+const env = require('./env');
 
 const options = {
   definition: {
@@ -10,7 +11,7 @@ const options = {
     },
     // Relative server URL: "Try it out" then targets whatever host served the
     // docs page (LAN IP, tunnel URL, etc.) instead of a hardcoded origin.
-    servers: [{ url: '/' }],
+    servers: [{ url: env.CLIENT_URL }],
     components: {
       securitySchemes: {
         bearerAuth: {

@@ -119,13 +119,18 @@ const forgotPassword = catchAsync(async (req, res) => {
   const user = await User.findOne({ email });
 
   // Always respond the same way so we don't leak which emails are registered.
+  let rawToken;
   if (user) {
-    const rawToken = user.createPasswordResetToken(env.passwordResetExpiresMin);
+    rawToken = user.createPasswordResetToken(env.passwordResetExpiresMin);
     await user.save({ validateBeforeSave: false });
     await sendPasswordResetEmail(user, rawToken);
   }
 
-  res.status(200).json({ message: 'If that email is registered, a reset link has been sent.' });
+  res.status(200).json({
+    message: 'If that email is registered, a reset link has been sent.',
+    // Only exposed in tests so the reset flow can be exercised without reading real email.
+    ...(env.nodeEnv === 'test' && rawToken && { devResetToken: rawToken })
+  });
 });
 
 const resetPassword = catchAsync(async (req, res, next) => {

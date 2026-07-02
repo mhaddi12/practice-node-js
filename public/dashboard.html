@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Auth API Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css" />
+</head>
+<body>
+  <header>
+    <h1>Auth API Dashboard</h1>
+    <button id="logoutBtn" class="hidden">Log out</button>
+  </header>
+
+  <main>
+    <section id="authSection">
+      <div class="tabs">
+        <button id="showLoginTab" class="tab active">Login</button>
+        <button id="showRegisterTab" class="tab">Register</button>
+      </div>
+
+      <form id="loginForm" class="card">
+        <h2>Login</h2>
+        <label>Username <input type="text" id="loginUsername" required /></label>
+        <label>Password <input type="password" id="loginPassword" required /></label>
+        <button type="submit">Log in</button>
+        <p class="message" id="loginMessage"></p>
+      </form>
+
+      <form id="registerForm" class="card hidden">
+        <h2>Register</h2>
+        <label>Username <input type="text" id="registerUsername" required /></label>
+        <label>Email <input type="email" id="registerEmail" required /></label>
+        <label>Password <input type="password" id="registerPassword" required minlength="8" /></label>
+        <button type="submit">Register</button>
+        <p class="message" id="registerMessage"></p>
+      </form>
+    </section>
+
+    <section id="dashboardSection" class="hidden">
+      <div class="card" id="profileCard">
+        <h2>My Profile</h2>
+        <dl id="profileInfo"></dl>
+      </div>
+
+      <div class="card hidden" id="adminCard">
+        <h2>All Users (admin)</h2>
+        <table id="usersTable">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Verified</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="usersTableBody"></tbody>
+        </table>
+        <p class="message" id="adminMessage"></p>
+      </div>
+    </section>
+  </main>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

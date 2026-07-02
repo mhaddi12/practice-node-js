@@ -1,3 +1,4 @@
+const path = require('node:path');
 const express = require('express');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./config/swagger');
@@ -9,9 +10,10 @@ function createApp() {
   const app = express();
 
   app.use(express.json());
+  app.use(express.static(path.join(__dirname, '../public')));
 
   app.get('/', (req, res) => {
-    res.status(200).json({ message: 'Auth API is running' });
+    res.status(200).json({ message: 'Auth API is running', dashboard: '/dashboard.html', docs: '/api-docs' });
   });
 
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));

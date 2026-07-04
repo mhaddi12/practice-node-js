@@ -57,7 +57,7 @@ router.get('/admin-only', authenticate, authorize('admin'), (req, res) => {
  * @swagger
  * /api/users:
  *   get:
- *     summary: List all users (admin only)
+ *     summary: List all users except the requesting admin (admin only)
  *     tags: [Users]
  *     security:
  *       - bearerAuth: []

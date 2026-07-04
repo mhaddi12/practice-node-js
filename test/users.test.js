@@ -53,7 +53,7 @@ async function createAndLogin({ username, email, password = 'secret123', role = 
   return requestJson('/api/auth/login', 'POST', { username, password });
 }
 
-test('GET /api/users lists users for an admin and is forbidden for a normal user', async () => {
+test('GET /api/users lists users for an admin, excludes the admin themself, and is forbidden for a normal user', async () => {
   await createAndLogin({ username: 'alice', email: 'alice@example.com' });
   const adminLogin = await createAndLogin({ username: 'root', email: 'root@example.com', role: 'admin' });
 
@@ -62,7 +62,8 @@ test('GET /api/users lists users for an admin and is forbidden for a normal user
 
   const allowed = await requestJson('/api/users', 'GET', null, adminLogin.body.accessToken);
   assert.equal(allowed.statusCode, 200);
-  assert.equal(allowed.body.users.length, 2);
+  assert.equal(allowed.body.users.length, 1);
+  assert.equal(allowed.body.users[0].username, 'alice');
 });
 
 test('GET /api/users/:id returns a user for an admin, 404 for unknown id', async () => {

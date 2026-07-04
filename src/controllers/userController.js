@@ -4,7 +4,7 @@ const catchAsync = require('../utils/catchAsync');
 const { formatUser } = require('./authController');
 
 const listUsers = catchAsync(async (req, res) => {
-  const users = await User.find();
+  const users = await User.find({ _id: { $ne: req.user._id } });
   res.status(200).json({ users: users.map(formatUser) });
 });
 

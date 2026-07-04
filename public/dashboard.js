@@ -10,6 +10,7 @@ const els = {
   registerForm: document.getElementById('registerForm'),
   loginMessage: document.getElementById('loginMessage'),
   registerMessage: document.getElementById('registerMessage'),
+  profileCard: document.getElementById('profileCard'),
   profileInfo: document.getElementById('profileInfo'),
   adminCard: document.getElementById('adminCard'),
   usersTableBody: document.getElementById('usersTableBody'),
@@ -83,13 +84,19 @@ function showDashboardView() {
 }
 
 function renderProfile(user) {
-  els.profileInfo.innerHTML = `
-    <dt>Username</dt><dd>${user.username}</dd>
-    <dt>Email</dt><dd>${user.email}</dd>
-    <dt>Role</dt><dd>${user.role}</dd>
-    <dt>Email verified</dt><dd>${user.isEmailVerified ? 'Yes' : 'No'}</dd>
-  `;
-  els.adminCard.classList.toggle('hidden', user.role !== 'admin');
+  const isAdmin = user.role === 'admin';
+
+  els.profileCard.classList.toggle('hidden', isAdmin);
+  if (!isAdmin) {
+    els.profileInfo.innerHTML = `
+      <dt>Username</dt><dd>${user.username}</dd>
+      <dt>Email</dt><dd>${user.email}</dd>
+      <dt>Role</dt><dd>${user.role}</dd>
+      <dt>Email verified</dt><dd>${user.isEmailVerified ? 'Yes' : 'No'}</dd>
+    `;
+  }
+
+  els.adminCard.classList.toggle('hidden', !isAdmin);
 }
 
 async function loadUsers() {
